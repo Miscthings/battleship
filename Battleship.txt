@@ -1,0 +1,81 @@
+﻿Battleship
+
+Class 1
+WELCOME
+Print greeting = “Welcome to Battleship”
+Print game board = 
+
+  	A	B	C	D	E	F	G	H
+  ~	~	~	~	~	~	~	~	~	~
+1 ~ .	.	.	.	.	.	.	.	~
+2 ~	.	.	.	.	.	.	.	.	~
+3 ~	.	.	.	.	.	.	.	.	~
+4 ~	.	.	.	.	.	.	.	.	~
+5 ~	.	.	.	.	.	.	.	.	~
+6 ~	.	.	.	.	.	.	.	.	~
+7 ~	.	.	.	.	.	.	.	.	~
+8 ~	.	.	.	.	.	.	.	.	~
+  ~	~	~	~	~	~	~	~	~	~
+
+SHIP PLACEMENT PHASE (Method)
+for loop for each of the 5 ships (i=0, up to 5)
+	create new object for ship with name equal to i counter (e.g.: if on third choice, i would be 3 and obj3 created)
+	get user input for ship type 1-5 (destroyer is 1, cruiser is 2, submarine is 3, battleship is 4, carrier is 5), var shipType
+	do
+		get user input for letter coordinate for ship to start at (e.g.: B), array shipCoord[8][]
+	while (shipCoord is within A to H) //point of while is so if coords not A-H, retry
+	do
+		get user input for number coordinate for ship to start at (e.g.: 4), array shipCoord[x][8]
+	while (shipCoord is within 1 to 8) //point of while is so if coords not 1-8, retry
+	do
+		Get user input for direction of placement (NESW), var shipDirection
+	while (shipDirection is N, E, S, or W) //point of while is so if direction is not one of those 4, retry
+	add to the array in the direction they just chose, corresponding to ship length from shipType
+		(e.g.: cruiser (3 length), B4 coord, east direction, so also add C4 and D4 to current object's array)
+	check if coordinates go out of bounds 
+		if yes, go back to shipCoords(and print a message for user where it went OOB it can help them visualize)
+			(e.g.: in above example, west direction instead, so array would be B4, A4, and then no more values to the left, "your ship went too far left")
+	check if coordinates collide with already placed ships 
+		if yes, back to shipCoords (print a message showing it collides with other ship at x coordinate(s))
+	//maybe combine the two checks with ||? (if not out of bounds AND if not collides)
+	print out game board with new object in its coordinates
+	confirm if satisfied with coordinates
+		if yes, i++
+back to for loop
+
+AI SHIP PLACEMENT PHASE (Method)
+basically all of the above code from ship placement phase, but instead of user input, random numbers.
+
+Class 2????
+GAME PHASE (vs AI or 1v1 w/ server) (Class? Method?)
+import class from package (the 5 stored ship objects and their array values, for self and opponent)
+
+while loop, while the win OR lose boolean values are false 
+	Display opponent board
+	user input coordinates A-H, array hitAttempt[x][]
+	user input coordinates 1-8, array hitAttempt[x][x]
+	check if the current hitAttempt values don't equal a coordinate you've already attempted to shoot at before
+	if hit, put o marker on coordinate space, print "Direct hit!"
+		. . .
+		. o .
+		. . .
+	else, x marker on coordinate space, print "Miss!"
+			. . .
+			. x .
+			. . .
+	check if an opponent ship (object) was destroyed
+		if yes, print message showing which ship was destroyed
+	check if 5 opponent ships destroyed 
+		if yes, boolean win=true, print "You win!"
+	
+	print message for start of opponent turn
+	if ai, random coordinates, if same as already hit, random again
+	if other user, get coordinates from their input, receive through server request or something
+	apply coordinates to user's field
+	delay opponent hit/miss message for 2 seconds 	//only for AI, delayed so the AI choice is not instantly generated and outputted right after the user's input, so user has time to see and take in hit/miss
+	
+	if hit, print coord that got hit //no need for display, don't really need to keep track of opponent shooting pattern/trends
+	check if user's ships all destroyed 
+		if yes, boolean lose = true, print "You lose!"
+	show user & opponent remaining ship health (destroyer 1/2, cruiser 0/3, etc)
+back to while loop
